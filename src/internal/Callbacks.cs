@@ -7,12 +7,13 @@ namespace Femyou
 {
   class Callbacks : IDisposable
   {
+    FMI2.fmi2CallbackFunctions functions;
     public Callbacks(Instance instance, ICallbacks cb)
     {
       Instance = instance;
       CB = cb;
       handle = GCHandle.Alloc(this);
-      var functions = new FMI2.fmi2CallbackFunctions
+      functions = new FMI2.fmi2CallbackFunctions
       {
         logger = LoggerCallback,
         allocateMemory = Marshalling.AllocateMemory,
