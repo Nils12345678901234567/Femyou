@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using size_t = System.UIntPtr;
+
 namespace Femyou
 {
   class Instance : IInstance
@@ -62,10 +64,10 @@ namespace Femyou
       (a, b, c, d) => library.fmi2GetString(a, b, c, d)
     ).Select(r => Marshalling.GetString(r));
 
-    private T[] Read<T>(IEnumerable<IVariable> variables, T[] values, Func<IntPtr, UInt32[], ulong, T[], int> call)
+    private T[] Read<T>(IEnumerable<IVariable> variables, T[] values, Func<IntPtr, UInt32[], size_t, T[], int> call)
     {
       var valueReferences = variables.Cast<Variable>().Select(variables => variables.ValueReference).ToArray();
-      var status = call(handle, valueReferences, (ulong)valueReferences.Length, values);
+      var status = call(handle, valueReferences, (size_t)valueReferences.Length, values);
       if (status != 0)
         throw new Exception("Failed to read");
       return values;
@@ -88,11 +90,11 @@ namespace Femyou
       (a, b, c, d) => library.fmi2SetString(a, b, c, d)
     );
 
-    private void Write<T>(IEnumerable<(IVariable, T)> variables, Func<IntPtr, UInt32[], ulong, T[], int> call)
+    private void Write<T>(IEnumerable<(IVariable, T)> variables, Func<IntPtr, UInt32[], size_t, T[], int> call)
     {
       var valueReferences = variables.Select(variables => variables.Item1).Cast<Variable>().Select(variables => variables.ValueReference).ToArray();
       var values = variables.Select(variables => variables.Item2).ToArray();
-      var status = call(handle, valueReferences, (ulong)valueReferences.Length, values);
+      var status = call(handle, valueReferences, (size_t)valueReferences.Length, values);
       if (status != 0)
         throw new Exception("Failed to write");
     }

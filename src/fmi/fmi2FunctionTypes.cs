@@ -1,6 +1,10 @@
 
 using System;
-using size_t = System.UInt64;
+
+
+using size_t = System.UIntPtr;
+
+
 
 /* Type definitions of variables passed as arguments
    Version "default" means:
@@ -122,8 +126,8 @@ namespace Femyou
   {
     public static IntPtr[] CreateArray(int size) => Enumerable.Repeat(IntPtr.Zero, size).ToArray();
     public static string GetString(IntPtr stringPtr) => Marshal.PtrToStringAnsi(stringPtr);
-    public static IntPtr AllocateMemory(size_t nobj, size_t size) => Marshal.AllocHGlobal((int)(nobj * size));
+    public static IntPtr AllocateMemory(size_t nobj, size_t size) => Marshal.AllocHGlobal((int)((int)nobj * (int)size));
     public static void FreeMemory(IntPtr obj) => Marshal.FreeHGlobal(obj);
-  }
+  }  
 }
 

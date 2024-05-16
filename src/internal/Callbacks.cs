@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 
+using size_t = System.UIntPtr;
+
 namespace Femyou
 {
   class Callbacks : IDisposable
@@ -21,7 +23,7 @@ namespace Femyou
         stepFinished = StepFinishedCallback,
         componentEnvironment = GCHandle.ToIntPtr(handle)
       };
-      Structure = Marshalling.AllocateMemory(1, (ulong)Marshal.SizeOf(functions));
+      Structure = Marshalling.AllocateMemory((size_t)1, (size_t)Marshal.SizeOf(functions));
       Marshal.StructureToPtr(functions, Structure, false);
     }
     public readonly Instance Instance;
