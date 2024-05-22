@@ -36,6 +36,7 @@ using fmi2StatusKind = System.Int32;
 
 using System.Runtime.InteropServices;
 using System.Linq;
+using System.Text;
 
 namespace Femyou
 {
@@ -85,6 +86,8 @@ namespace Femyou
     );
 
     public delegate void fmi2FreeInstanceTYPE(fmi2Component c);
+
+    public delegate void fmi2SetDebugLogging(fmi2Component c, fmi2Boolean loggingOn, size_t nCategories, fmi2String[] categories);
 
     /* Enter and exit initialization mode, terminate and reset */
     public delegate fmi2Status fmi2SetupExperimentTYPE(fmi2Component c,

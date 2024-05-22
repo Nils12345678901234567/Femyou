@@ -36,6 +36,8 @@ namespace Femyou
       fmi2SetString = fmuLibrary.LoadFunction<FMI2.fmi2SetStringTYPE>(nameof(fmi2SetString));
 
       fmi2DoStep = fmuLibrary.LoadFunction<FMI2.fmi2DoStepTYPE>(nameof(fmi2DoStep));
+
+      fmi2SetDebugLogging = fmuLibrary.LoadFunction<FMI2.fmi2SetDebugLogging>(nameof(fmi2SetDebugLogging));
     }
 
     public readonly FMI2.fmi2InstantiateTYPE fmi2Instantiate;
@@ -54,6 +56,7 @@ namespace Femyou
     public readonly FMI2.fmi2SetBooleanTYPE fmi2SetBoolean;
     public readonly FMI2.fmi2SetStringTYPE fmi2SetString;
     public readonly FMI2.fmi2DoStepTYPE fmi2DoStep;
+    public readonly FMI2.fmi2SetDebugLogging fmi2SetDebugLogging;
 
     private readonly NativeLibrary fmuLibrary;
     public void Dispose()

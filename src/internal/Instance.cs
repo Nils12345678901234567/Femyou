@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Femyou.FMI2;
 
 using size_t = System.UIntPtr;
 
@@ -24,6 +25,11 @@ namespace Femyou
       );
       if (handle == IntPtr.Zero)
         throw new Exception("Cannot instanciate model");
+    }
+
+    public void SetDebugLogging(bool enableLogging, string[] categories)
+    {
+            library.fmi2SetDebugLogging(handle, enableLogging ? FMI2.fmi2Boolean.fmi2True : FMI2.fmi2Boolean.fmi2False, (size_t)categories.Length, categories);
     }
     public string Name { get; }
     public double CurrentTime { get; private set; }

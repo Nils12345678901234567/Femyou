@@ -17,7 +17,12 @@ namespace Femyou
     double CurrentTime { get; }
     void StartTime(double time);
     void AdvanceTime(double time);
-  }
+
+    void SetDebugLogging(bool enableDebug, string[] categories) 
+    {
+        // Default implementation for backwards compatibility
+    }
+    }
 
   public static class ExtensionsIInstance
   {

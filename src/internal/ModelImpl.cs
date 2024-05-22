@@ -22,11 +22,22 @@ namespace Femyou
       Variables = ModelDescription.Root.Element("ModelVariables").Elements().Select(sv => new Variable(sv) as IVariable).ToDictionary(sv => sv.Name, sv => sv);
       var coSimulationID = ModelDescription.Root.Element("CoSimulation").Attribute("modelIdentifier").Value;
       CoSimulation = new Library(TmpFolder,coSimulationID);
+      var elm = ModelDescription.Root.Element("LogCategories");
+      if (elm != null)
+      {
+          LogCategories = elm.Elements().Select(cat => cat.Attribute("name").Value).ToList();
+      }
+      else
+      {
+          LogCategories = new List<string>();
+      }
     }
 
     public string Name => ModelDescription.Root.Attribute("modelName").Value;
     public string Description => ModelDescription.Root.Attribute("description").Value;
     public string GUID => ModelDescription.Root.Attribute("guid").Value;
+
+    public IEnumerable<string> LogCategories { get; }
     public IReadOnlyDictionary<string,IVariable> Variables { get; }
     public IInstance CreateCoSimulationInstance(string name, ICallbacks callbacks) => new Instance(name,this,CoSimulation,FMI2.fmi2Type.fmi2CoSimulation,callbacks);
 
